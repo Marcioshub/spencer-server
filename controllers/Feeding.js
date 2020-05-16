@@ -1,4 +1,4 @@
-const moment = require("moment");
+const moment = require("moment-timezone");
 const Feeding = require("../models/Feeding");
 const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("../utils/Async");
@@ -16,7 +16,10 @@ exports.getDaysFeedings = asyncHandler(async (req, res, next) => {
   }
 
   // current day
-  const currentDay = moment().format("MMMM Do YYYY, h:mm:ss a").split(",")[0];
+  const currentDay = moment()
+    .tz("America/New_York")
+    .format("MMMM Do YYYY, h:mm:ss a")
+    .split(",")[0];
   //console.log("currentday", currentDay);
 
   const feedings = await Feeding.find({
