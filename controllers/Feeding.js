@@ -9,15 +9,21 @@ const asyncHandler = require("../utils/Async");
   @access:          Public
 */
 exports.getDaysFeedings = asyncHandler(async (req, res, next) => {
+  if (process.env.API_KEY !== req.body.api_key) {
+    res.status(403).json({
+      error: "Access denied",
+    });
+  }
+
   // current day
   const currentDay = moment().format("MMMM Do YYYY, h:mm:ss a").split(",")[0];
-  console.log("currentday", currentDay);
+  //console.log("currentday", currentDay);
 
   const feedings = await Feeding.find({
     day: currentDay,
   });
 
-  console.log(feedings);
+  //console.log(feedings);
 
   if (!feedings) {
     return next(
@@ -37,6 +43,12 @@ exports.getDaysFeedings = asyncHandler(async (req, res, next) => {
   @access:          Public
 */
 exports.addFeeding = asyncHandler(async (req, res, next) => {
+  if (process.env.API_KEY !== req.body.api_key) {
+    res.status(403).json({
+      error: "Access denied",
+    });
+  }
+
   await Feeding.create({});
 
   res.status(201).json({

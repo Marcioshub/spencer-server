@@ -1,4 +1,4 @@
-const ErrorResponse = require("../utils/errorResponse");
+const ErrorResponse = require("../utils/ErrorResponse");
 const colors = require("colors");
 
 const errorHandler = (err, req, res, next) => {
